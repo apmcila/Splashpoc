@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useState} from 'react';
 
 import {
+  MD3LightTheme,
   Provider as PaperProvider,
   BottomNavigation as Screens,
   Text,
@@ -12,12 +13,22 @@ import SplashScreen from 'react-native-splash-screen';
 import {NativeRouter, Route, Routes} from 'react-router-native';
 import ChatScreen from './src/screens/chat';
 import ChatsScreen from './src/screens/chats';
+// import colors from './src/utils/colors.js';
+import colors from './resources/colors';
 
 interface NavRoutes {
   key: string;
   title: string;
   focusedIcon: string;
 }
+
+const theme = {
+  ...MD3LightTheme,
+  colors: {
+    ...MD3LightTheme.colors,
+    ...colors,
+  },
+};
 
 function App(): JSX.Element {
   const [index, setIndex] = useState(0);
@@ -45,7 +56,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
-      <PaperProvider>
+      <PaperProvider theme={theme}>
         <NativeRouter>
           <Routes>
             <Route
@@ -54,6 +65,7 @@ function App(): JSX.Element {
                 <Screens
                   navigationState={{index, routes}}
                   onIndexChange={setIndex}
+                  theme={theme}
                   renderScene={renderScene}
                 />
               }
